@@ -76,6 +76,84 @@ class Solution(object):
                 carry = tempSum // 10
             return result.next
 
+# 371 calculate sum using bit
+    class Solution(object):
+        def getSum(self, a, b):
+            """
+            :type a: int
+            :type b: int
+            :rtype: int
+            """
+            mask = 0xFFFFFFFF
+            if b == 0:
+                return a
+            tempSum = (a ^ b) & mask
+            carry = ((a & b) << 1) & mask
+            if (tempSum >> 31) & 1:
+                return self.getSum(~(tempSum ^ mask), carry)
+            else:
+                return self.getSum(tempSum, carry)
+        # it will get error without "& mask" for some integer like 13
+
+#191
+    class Solution(object):
+        def hammingWeight(self, n):
+            """
+            :type n: int
+            :rtype: int
+            """
+            count =0
+            while n:
+                count +=1
+                n &= n-1
+            return count
+    # n & n - 1 means that the last bit of "1" will be removed
+
+#461
+    class Solution(object):
+        def hammingDistance(self, x, y):
+            """
+            :type x: int
+            :type y: int
+            :rtype: int
+            """
+            diff = x^y
+            count = 0
+            while diff:
+                diff &= diff - 1
+                count += 1
+            return count
+    #quite same as #191, just add an & operation
+    # one line method found online
+    class Solution(object):
+        def hammingDistance1(self, x, y):
+            """
+            :type x: int
+            :type y: int
+            :rtype: int
+            """
+            return bin(x^y).count('1')
+    #bin(): converts an integer number to a binary string prefixed with 0b
+
+
+#190 Reverse Bits
+    class Solution:
+        # @param n, an integer
+        # @return an integer
+        def reverseBits(self, n):
+            temp = n
+            count = 0
+            result = 0
+            while temp:
+                if temp > (temp >> 1) << 1:
+                    result += 2 ** (31 - count)
+                count += 1
+                temp >>= 1
+            return result
+
+
+
+
 
 
 
