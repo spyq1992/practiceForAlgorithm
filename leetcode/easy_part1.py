@@ -122,7 +122,7 @@ class Solution(object):
             while diff:
                 diff &= diff - 1
                 count += 1
-            return count
+            return coun
     #quite same as #191, just add an & operation
     # one line method found online
     class Solution(object):
@@ -150,6 +150,9 @@ class Solution(object):
                 count += 1
                 temp >>= 1
             return result
+
+
+
 
 
 
