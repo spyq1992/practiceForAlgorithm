@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 class Solution(object):
 
 # 01
@@ -122,7 +125,7 @@ class Solution(object):
             while diff:
                 diff &= diff - 1
                 count += 1
-            return coun
+            return count
     #quite same as #191, just add an & operation
     # one line method found online
     class Solution(object):
@@ -152,12 +155,134 @@ class Solution(object):
             return result
 
 
+#136
+    class Solution(object):
+        def singleNumber(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            result = 0
+            for num in nums:
+                result ^= num
+            return result
+    #one line version1:
+    class Solution(object):
+        def singleNumber(self, nums):
+            return reduce(lambda x,y:x^y, nums)
 
+#137
+    class Solution(object):
+        def singleNumber(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            return (3*sum(set(nums)) - sum(nums))/2
 
+    #clever solution with bit manipulation:
+    class Solution(object):
+        def singleNumber(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            ones = 0
+            twos = 0
+            for i in len(nums):
+                ones = (ones ^ nums[i]) & ~ twos
+                twos = (twos ^ nums[i]) & ~ ones
+            return ones
+#260
+    class Solution(object):
+        def singleNumber(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: List[int]
+            """
+            res = []
+            rightDiff = 1
+            a = []
+            b = []
+            xorRes = 0
+            for num in nums:
+                xorRes ^= num
+            while (xorRes & rightDiff == 0):
+                rightDiff <<= 1
+            for num in nums:
+                if num & rightDiff != 0:
+                    a.append(num)
+                else:
+                    b.append(num)
+            aRes = 0
+            for num in a:
+                aRes ^= num
+            bRes = 0
+            for num in b:
+                bRes ^= num
+            res.append(aRes)
+            res.append(bRes)
+            return res
 
+#7
+    class Solution(object):
+        def reverse(self, x):
+            """
+            :type x: int
+            :rtype: int
+            """
+            if x < 0:
+                sign = -1
+            else:
+                sign = 1
+            result = sign * int(str(x)[::-1])
+            return result if -(2 ** 31) - 1 < result < 2 ** 31 else 0
 
+#9
+    class Solution(object):
+        def isPalindrome(self, x):
+            """
+            :type x: int
+            :rtype: bool
+            """
+            if x < 0:
+                return False
+            if x < 10:
+                return True
+            count = 1
+            while x // (10 ** count) >= 10:
+                count += 1
+            while x != 0:
+                right = x % 10
+                left = x // (10 ** count)
+                if left != right:
+                    return False
+                x = x % (10 ** count) / 10
+                count -= 2
+            return True
 
+#234
+    class Solution(object):
+        def isPalindrome(self, head):
+            """
+            :type head: ListNode
+            :rtype: bool
+            """
+            count = 0
+            cur = 0
+            mylist = []
+            while head:
+                count += 1
+                mylist.append(head.val)
+                head = head.next
+            count -= 1
+            while cur <= count - cur:
+                if mylist[cur] != mylist[count - cur]:
+                    return False
+                cur += 1
+            return True
 
+#14
 
 
 
