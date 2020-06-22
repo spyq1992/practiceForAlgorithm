@@ -283,10 +283,97 @@ class Solution(object):
             return True
 
 #14
+    class Solution(object):
+        def longestCommonPrefix(self, strs):
+            """
+            :type strs: List[str]
+            :rtype: str
+            """
+            check = True
+            count = 1
+            prefix = ""
+            if len(strs) > 1:
+                if strs[0] != "":
+                    while check:
+                        if count <= len(strs[0]):
+                            prefix = strs[0][0:count]
+                            for str in strs:
+                                if str[0:count] != prefix:
+                                    check = False
+                            count += 1
+                        else:
+                            count += 1
+                            check = False
+                    return prefix[0:count - 2]
+                else:
+                    return ""
+            elif len(strs) == 1:
+                return strs[0]
+            else:
+                return ""
 
 
+    #an elegant solution found online.
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if strs:
+            shortest = min(strs, key=len)
+            for i in range(len(shortest)):
+                if any(word[i] != shortest[i] for word in strs):
+                    return shortest[:i]
+            return shortest
+        return ""
+#20
+    class Solution(object):
+        def isValid(self, s):
+            """
+            :type s: str
+            :rtype: bool
+            """
+            cheatSheet = {"{": 1, "[": 2, "(": 3, "}": 4, "]": 5, ")": 6}
+            listFirstHalf = []
+            listSecondHalf = []
+            for i in range(len(s)):
+                if cheatSheet[s[i]] < 4:
+                    listFirstHalf.append(cheatSheet[s[i]])
+                elif len(listFirstHalf) > 0:
+                    if cheatSheet[s[i]] - 3 == listFirstHalf[-1]:
+                        del listFirstHalf[-1]
+                    else:
+                        return False
+                else:
+                    return False
 
+            if len(listFirstHalf) == 0:
+                return True
+            else:
+                return False
 
-solution = Solution()
-print(solution.twoSum1( [1,3,6,9], 10))
-print(solution.twoSum2( [1,3,6,9], 10))
+#26 del the same list while the list is iterated
+    class Solution(object):
+        def removeDuplicates(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            nums.sort()
+            for i in range(len(nums) - 2, -1, -1):
+                if nums[i] == nums[i + 1]:
+                    del nums[i]
+            return len(nums)
+
+#21 reverse list
+    class Solution(object):
+        def mergeTwoLists(self, l1, l2):
+            """
+            :type l1: ListNode
+            :type l2: ListNode
+            :rtype: ListNode
+            """
+            if not l1 or not l2:
+                return l1 or l2
+            if l1.val < l2.val:
+                l1.next = self.mergeTwoLists(l1.next, l2)
+                return l1
+            else:
+                l2.next = self.mergeTwoLists(l1, l2.next)
+                return l2
