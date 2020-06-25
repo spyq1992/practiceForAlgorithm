@@ -377,3 +377,59 @@ class Solution(object):
             else:
                 l2.next = self.mergeTwoLists(l1, l2.next)
                 return l2
+
+#53 max subarray
+    class Solution:
+        def maxSubArray(self, nums: List[int]) -> int:
+            maxRes = nums[0]
+            smallRes = 0
+            for num in nums:
+                if num + smallRes > 0:
+                    if num >= 0:
+                        smallRes += num
+                        if smallRes > maxRes:
+                            maxRes = smallRes
+                    else:
+                        smallRes += num
+                else:
+                    if num > maxRes:
+                        maxRes = num
+                    smallRes = 0
+            return maxRes
+
+#160
+    class Solution:
+        def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+            pa = headA
+            pb = headB
+
+            if pa is None or pb is None:
+                return None
+            while pa is not pb:
+                if pa is None:
+                    pa = headB
+                else:
+                    pa = pa.next
+                if pb is None:
+                    pb = headA
+                else:
+                    pb = pb.next
+            return pa
+
+#599
+class Solution:
+    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+        res = []
+        resCount = 2000
+        indexFirst = 0
+        for str in list1:
+            if str in list2:
+                temp = list2.index(str)
+                if indexFirst + temp  <= resCount:
+                    resCount = indexFirst + temp
+                    if len(res) == 0 or indexFirst + temp <= resCount:
+                        res.append(str)
+                    else:
+                        res[0] = str
+            indexFirst += 1
+        return res
