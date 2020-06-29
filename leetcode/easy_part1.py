@@ -433,3 +433,17 @@ class Solution:
                         res[0] = str
             indexFirst += 1
         return res
+
+#141
+
+    class Solution:
+        def hasCycle(self, head: ListNode) -> bool:
+            try:
+                faster = head.next
+                slower = head
+                while faster is not slower:
+                    faster = faster.next.next
+                    slower = slower.next
+                return True
+            except:
+                return False
