@@ -447,3 +447,192 @@ class Solution:
                 return True
             except:
                 return False
+
+#876
+    class Solution:
+        def middleNode(self, head: ListNode) -> ListNode:
+            count = 0
+            resCount = head
+            res = head
+            while resCount:
+                resCount = resCount.next
+                count += 1
+
+            for i in range(int(count / 2)):
+                res = res.next
+            return res
+
+#206
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, val=0, next=None):
+    #         self.val = val
+    #         self.next = next
+    # iteration
+    class Solution:
+        def reverseList(self, head: ListNode) -> ListNode:
+            ori = head
+            res = None
+            while ori:
+                tmp = ori.next
+                ori.next = res
+                res = ori
+                ori = tmp
+            return res
+#92
+    class Solution:
+        def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+            if m == n:
+                return head
+            dummyNode = ListNode(0)
+            dummyNode.next = head
+            res = dummyNode
+            resPart2 = None
+            for i in range(m - 1):
+                res = res.next
+            ori = res.next
+            for i in range(n - m + 1):
+                tmp = ori.next
+                ori.next = resPart2
+                resPart2 = ori
+                ori = tmp
+            res.next.next = ori
+            res.next = resPart2
+            return dummyNode.next
+
+#203
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, val=0, next=None):
+    #         self.val = val
+    #         self.next = next
+    class Solution:
+        def removeElements(self, head: ListNode, val: int) -> ListNode:
+            dummyNode = ListNode(-1)
+            dummyNode.next = head
+            cur = dummyNode
+            while cur is not None:
+                if cur.next is not None and cur.next.val == val:
+                    cur.next = cur.next.next
+                else:
+                    cur = cur.next
+            return dummyNode.next
+
+#328
+    class Solution:
+        def oddEvenList(self, head: ListNode) -> ListNode:
+            if head is None:
+                return head
+            odd = head
+            even = head.next
+            evenHead = even
+            while even and even.next:
+                odd.next = odd.next.next
+                even.next = even.next.next
+                odd = odd.next
+                even = even.next
+
+            odd.next = evenHead
+            return head
+
+#67
+    class Solution:
+        def addBinary(self, a: str, b: str) -> str:
+            if len(a) == 0:
+                return b
+            if len(b) == 0:
+                return a
+            if a[-1] == "1" and b[-1] == "1":
+                return self.addBinary(self.addBinary(a[0:-1], b[0:-1]), "1") + "0"
+            if a[-1] == "0" and b[-1] == "0":
+                return self.addBinary(a[0:-1], b[0:-1]) + "0"
+            else:
+                return self.addBinary(a[0:-1], b[0:-1]) + "1"
+
+#70
+    class Solution:
+        def climbStairs(self, n: int) -> int:
+            res = [-1 for i in range(n + 1)]
+            if n < 3:
+                return n
+            else:
+                res[1] = 1
+                res[2] = 2
+                for i in range(3, n + 1):
+                    res[i] = res[i - 1] + res[i - 2]
+            return res[n]
+
+
+#746
+    class Solution:
+        def minCostClimbingStairs(self, cost: List[int]) -> int:
+            amount = len(cost)
+            for i in range(2, amount):
+                if cost[i - 1] > cost[i - 2]:
+                    cost[i] += cost[i - 2]
+                else:
+                    cost[i] += cost[i - 1]
+            if cost[amount - 1] < cost[amount - 2]:
+                return cost[amount - 1]
+            else:
+                return cost[amount - 2]
+
+#83
+    class Solution:
+        def deleteDuplicates(self, head: ListNode) -> ListNode:
+            cur = head
+            if cur:
+                while cur.next:
+                    if cur.val == cur.next.val:
+                        cur.next = cur.next.next
+                    else:
+                        cur = cur.next
+                return head
+            else:
+                return head
+
+#82
+    class Solution:
+        def deleteDuplicates(self, head: ListNode) -> ListNode:
+            dummyNode = ListNode(0)
+            dummyNode.next = head
+            cur = dummyNode
+            val = -100
+            while cur.next and cur.next.next:
+                if cur.next.val == val:
+                    cur.next = cur.next.next
+                elif cur.next.val == cur.next.next.val:
+                    val = cur.next.val
+                    cur.next = cur.next.next
+                else:
+                    cur = cur.next
+            if cur.next and cur.next.val == val:
+                cur.next = cur.next.next
+            return dummyNode.next
+#100
+    class Solution:
+        def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+            if p and q:
+                return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+            return p is q
+
+#101
+    class Solution:
+        def isSymmetric(self, root: TreeNode) -> bool:
+            if root:
+                if root.left and root.right:
+                    if root.left.val == root.right.val:
+                        return self.checkSymmetric(root.left, root.right) and self.checkSymmetric(root.left, root.right)
+                    else:
+                        return False
+                else:
+                    return root.left is root.right
+            else:
+                return True
+
+        def checkSymmetric(self, subTreeA: TreeNode, subTreeB: TreeNode) -> bool:
+            if subTreeA and subTreeB:
+                return subTreeA.val == subTreeB.val and self.checkSymmetric(subTreeA.left,
+                                                                            subTreeB.right) and self.checkSymmetric(
+                    subTreeB.left, subTreeA.right)
+            return subTreeA is subTreeB
