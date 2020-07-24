@@ -417,22 +417,22 @@ class Solution(object):
             return pa
 
 #599
-class Solution:
-    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
-        res = []
-        resCount = 2000
-        indexFirst = 0
-        for str in list1:
-            if str in list2:
-                temp = list2.index(str)
-                if indexFirst + temp  <= resCount:
-                    resCount = indexFirst + temp
-                    if len(res) == 0 or indexFirst + temp <= resCount:
-                        res.append(str)
-                    else:
-                        res[0] = str
-            indexFirst += 1
-        return res
+    class Solution:
+        def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+            res = []
+            resCount = 2000
+            indexFirst = 0
+            for str in list1:
+                if str in list2:
+                    temp = list2.index(str)
+                    if indexFirst + temp  <= resCount:
+                        resCount = indexFirst + temp
+                        if len(res) == 0 or indexFirst + temp <= resCount:
+                            res.append(str)
+                        else:
+                            res[0] = str
+                indexFirst += 1
+            return res
 
 #141
 
@@ -636,3 +636,132 @@ class Solution:
                                                                             subTreeB.right) and self.checkSymmetric(
                     subTreeB.left, subTreeA.right)
             return subTreeA is subTreeB
+
+#104
+    def maxDepth(self, root: TreeNode) -> int:
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) if root else 0
+
+#107
+    class Solution:
+        def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+            level = 1
+            res = []
+            if root:
+                temp = []
+                temp.append(root.val)
+                res.insert(0, temp)
+                self.checkDeeper(root.left, level, res)
+                self.checkDeeper(root.right, level, res)
+                return res
+            else:
+                return root
+
+        def checkDeeper(self, p: TreeNode, level, res):
+            if p:
+                level += 1
+                if level > len(res):
+                    temp = []
+                    temp.append(p.val)
+                    res.insert(0, temp)
+                else:
+                    res[len(res) - level].append(p.val)
+                self.checkDeeper(p.left, level, res)
+                self.checkDeeper(p.right, level, res)
+
+#102
+    class Solution:
+        def levelOrder(self, root: TreeNode) -> List[List[int]]:
+            level = 1
+            res = []
+            if root:
+                temp = []
+                temp.append(root.val)
+                res.append(temp)
+                self.checkDeeper(root.left, level, res)
+                self.checkDeeper(root.right, level, res)
+                return res
+            else:
+                return root
+
+        def checkDeeper(self, p: TreeNode, level, res):
+            if p:
+                level += 1
+                if level > len(res):
+                    temp = []
+                    temp.append(p.val)
+                    res.append(temp)
+                else:
+                    res[level - 1].append(p.val)
+                self.checkDeeper(p.left, level, res)
+                self.checkDeeper(p.right, level, res)
+
+#108
+    def sortedArrayToBST(self, num):
+        if not num:
+            return None
+
+        mid = len(num) // 2
+
+        root = TreeNode(num[mid])
+        root.left = self.sortedArrayToBST(num[:mid])
+        root.right = self.sortedArrayToBST(num[mid + 1:])
+
+        return root
+
+#110
+    class Solution:
+        def isBalanced(self, root: TreeNode) -> bool:
+
+            def getHeight(subRoot) -> int:
+                if subRoot is None:
+                    return 0
+                left = getHeight(subRoot.left)
+                right = getHeight(subRoot.right)
+
+                if left == -1 or right == -1 or abs(left - right) >= 2:
+                    return -1
+                else:
+                    return max(left, right) + 1
+
+            return getHeight(root) != -1
+
+#530
+    def getMinimumDifference(self, root):
+        L = []
+        def dfs(node):
+            if node.left: dfs(node.left)
+            L.append(node.val)
+            if node.right: dfs(node.right)
+        dfs(root)
+        return min(b - a for a, b in zip(L, L[1:]))
+
+#111
+    def minDepth(self, root: TreeNode) -> int:
+        def nextChild(subRoot, curDepth, minDepth) -> int:
+            if subRoot:
+                if subRoot.left:
+                    curDepth += 1
+                    minDepth = nextChild(subRoot.left, curDepth, minDepth)
+                    curDepth -= 1
+                if subRoot.right:
+                    curDepth += 1
+                    minDepth = nextChild(subRoot.right, curDepth, minDepth)
+                if subRoot.left is None and subRoot.right is None:
+                    if minDepth == 0 or minDepth > curDepth:
+                        return curDepth
+            return minDepth
+
+        return nextChild(root, 1, 0)
+
+#112
+    def hasPathSum(self, root, sum):
+        if not root:
+            return False
+
+        if not root.left and not root.right and root.val == sum:
+            return True
+
+        sum -= root.val
+
+        return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
+
