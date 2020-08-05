@@ -765,3 +765,97 @@ class Solution(object):
 
         return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
 
+#118
+    class Solution:
+        def generate(self, numRows: int) -> List[List[int]]:
+            if numRows == 1:
+                return [[1]]
+            if numRows == 2:
+                return [[1], [1, 1]]
+            if numRows > 2:
+                res = [[1], [1, 1]]
+                for i in range(2, numRows):
+                    tempList = [1]
+                    for j in range(1, i):
+                        tempList.append(res[i - 1][j - 1] + res[i - 1][j])
+                    tempList.append(1)
+                    res.append(tempList)
+                return res
+
+#119
+    class Solution:
+        def getRow(self, rowIndex: int) -> List[int]:
+            if rowIndex == 0:
+                return [1]
+            if rowIndex == 1:
+                return [1, 1]
+            if rowIndex > 1:
+                res = [[1], [1, 1]]
+                for i in range(2, rowIndex + 1):
+                    tempList = [1]
+                    for j in range(1, i):
+                        tempList.append(res[i - 1][j - 1] + res[i - 1][j])
+                    tempList.append(1)
+                    res.append(tempList)
+                return res[rowIndex]
+
+#121
+    def maxProfit(self, prices: List[int]) -> int:
+        diffPrices = []
+        for i in range(len(prices) - 1):
+            diffPrices.append(prices[i+1] - prices[i])
+        maxRes = 0
+        smallRes = 0
+        for num in diffPrices:
+            if num + smallRes > 0:
+                if num >= 0:
+                    smallRes += num
+                    if smallRes > maxRes:
+                        maxRes = smallRes
+                else:
+                    smallRes += num
+            else:
+                if num > maxRes:
+                    maxRes = num
+                smallRes = 0
+        return maxRes
+
+#122
+    def maxProfit(self, prices: List[int]) -> int:
+        diffPrices = []
+        for i in range(len(prices) - 1):
+            diffPrices.append(prices[i+1] - prices[i])
+        maxRes = 0
+        for num in diffPrices:
+            if num > 0:
+                maxRes += num
+        return maxRes
+
+#123
+    def maxProfit(self, prices: List[int]) -> int:
+        diffPrices = []
+        for i in range(len(prices) - 1):
+            diffPrices.append(prices[i+1] - prices[i])
+        firstRes = 0
+        secondRes = 0
+        smallRes = 0
+        temp = 0
+        for num in diffPrices:
+            if smallRes == 0 and num > 0:
+                if num > secondRes:
+                    temp = num
+            if num + smallRes > 0:
+                if num >= 0:
+                    smallRes += num
+                    if smallRes > firstRes:
+                        secondRes = firstRes
+                        firstRes = num
+                    elif smallRes > secondRes:
+                        secondRes = num
+                else:
+                    smallRes += num
+            else:
+                smallRes = 0
+        return firstRes+secondRes
+
+
