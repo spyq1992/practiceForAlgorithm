@@ -3,7 +3,7 @@ from functools import reduce
 
 class Solution(object):
 
-# 01
+    # 01
     def twoSum1(self, nums, target):
         hm = {}
         for i, num in enumerate(nums):
@@ -13,8 +13,7 @@ class Solution(object):
             else:
                 return [hm[n], i]
 
-
-# 167
+    # 167
     def twoSum2(self, numbers, target):
         """
         :type numbers: List[int]
@@ -31,7 +30,7 @@ class Solution(object):
             elif numbers[i] + numbers[j] > target:
                 j -= 1
 
-# 653
+    # 653
     def findTarget(self, root, k):
         """
         :type root: TreeNode
@@ -52,7 +51,7 @@ class Solution(object):
 
         return self._findTarget(root.left, nums, k) or self._findTarget(root.right, nums, k)
 
-# 2
+    # 2
 
     class Solution(object):
         def addTwoNumbers(self, l1, l2):
@@ -79,7 +78,7 @@ class Solution(object):
                 carry = tempSum // 10
             return result.next
 
-# 371 calculate sum using bit
+    # 371 calculate sum using bit
     class Solution(object):
         def getSum(self, a, b):
             """
@@ -98,21 +97,22 @@ class Solution(object):
                 return self.getSum(tempSum, carry)
         # it will get error without "& mask" for some integer like 13
 
-#191
+    # 191
     class Solution(object):
         def hammingWeight(self, n):
             """
             :type n: int
             :rtype: int
             """
-            count =0
+            count = 0
             while n:
-                count +=1
-                n &= n-1
+                count += 1
+                n &= n - 1
             return count
+
     # n & n - 1 means that the last bit of "1" will be removed
 
-#461
+    # 461
     class Solution(object):
         def hammingDistance(self, x, y):
             """
@@ -120,13 +120,14 @@ class Solution(object):
             :type y: int
             :rtype: int
             """
-            diff = x^y
+            diff = x ^ y
             count = 0
             while diff:
                 diff &= diff - 1
                 count += 1
             return count
-    #quite same as #191, just add an & operation
+
+    # quite same as #191, just add an & operation
     # one line method found online
     class Solution(object):
         def hammingDistance1(self, x, y):
@@ -135,11 +136,11 @@ class Solution(object):
             :type y: int
             :rtype: int
             """
-            return bin(x^y).count('1')
-    #bin(): converts an integer number to a binary string prefixed with 0b
+            return bin(x ^ y).count('1')
 
+    # bin(): converts an integer number to a binary string prefixed with 0b
 
-#190 Reverse Bits
+    # 190 Reverse Bits
     class Solution:
         # @param n, an integer
         # @return an integer
@@ -154,8 +155,7 @@ class Solution(object):
                 temp >>= 1
             return result
 
-
-#136
+    # 136
     class Solution(object):
         def singleNumber(self, nums):
             """
@@ -166,21 +166,22 @@ class Solution(object):
             for num in nums:
                 result ^= num
             return result
-    #one line version1:
+
+    # one line version1:
     class Solution(object):
         def singleNumber(self, nums):
-            return reduce(lambda x,y:x^y, nums)
+            return reduce(lambda x, y: x ^ y, nums)
 
-#137
+    # 137
     class Solution(object):
         def singleNumber(self, nums):
             """
             :type nums: List[int]
             :rtype: int
             """
-            return (3*sum(set(nums)) - sum(nums))/2
+            return (3 * sum(set(nums)) - sum(nums)) / 2
 
-    #clever solution with bit manipulation:
+    # clever solution with bit manipulation:
     class Solution(object):
         def singleNumber(self, nums):
             """
@@ -193,7 +194,8 @@ class Solution(object):
                 ones = (ones ^ nums[i]) & ~ twos
                 twos = (twos ^ nums[i]) & ~ ones
             return ones
-#260
+
+    # 260
     class Solution(object):
         def singleNumber(self, nums):
             """
@@ -224,7 +226,7 @@ class Solution(object):
             res.append(bRes)
             return res
 
-#7
+    # 7
     class Solution(object):
         def reverse(self, x):
             """
@@ -238,7 +240,7 @@ class Solution(object):
             result = sign * int(str(x)[::-1])
             return result if -(2 ** 31) - 1 < result < 2 ** 31 else 0
 
-#9
+    # 9
     class Solution(object):
         def isPalindrome(self, x):
             """
@@ -261,7 +263,7 @@ class Solution(object):
                 count -= 2
             return True
 
-#234
+    # 234
     class Solution(object):
         def isPalindrome(self, head):
             """
@@ -282,7 +284,7 @@ class Solution(object):
                 cur += 1
             return True
 
-#14
+    # 14
     class Solution(object):
         def longestCommonPrefix(self, strs):
             """
@@ -312,8 +314,7 @@ class Solution(object):
             else:
                 return ""
 
-
-    #an elegant solution found online.
+    # an elegant solution found online.
     def longestCommonPrefix(self, strs: List[str]) -> str:
         if strs:
             shortest = min(strs, key=len)
@@ -322,7 +323,8 @@ class Solution(object):
                     return shortest[:i]
             return shortest
         return ""
-#20
+
+    # 20
     class Solution(object):
         def isValid(self, s):
             """
@@ -348,7 +350,7 @@ class Solution(object):
             else:
                 return False
 
-#26 del the same list while the list is iterated
+    # 26 del the same list while the list is iterated
     class Solution(object):
         def removeDuplicates(self, nums):
             """
@@ -361,7 +363,7 @@ class Solution(object):
                     del nums[i]
             return len(nums)
 
-#21 reverse list
+    # 21 reverse list
     class Solution(object):
         def mergeTwoLists(self, l1, l2):
             """
@@ -378,7 +380,7 @@ class Solution(object):
                 l2.next = self.mergeTwoLists(l1, l2.next)
                 return l2
 
-#53 max subarray
+    # 53 max subarray
     class Solution:
         def maxSubArray(self, nums: List[int]) -> int:
             maxRes = nums[0]
@@ -397,7 +399,7 @@ class Solution(object):
                     smallRes = 0
             return maxRes
 
-#160
+    # 160
     class Solution:
         def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
             pa = headA
@@ -416,7 +418,7 @@ class Solution(object):
                     pb = pb.next
             return pa
 
-#599
+    # 599
     class Solution:
         def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
             res = []
@@ -425,7 +427,7 @@ class Solution(object):
             for str in list1:
                 if str in list2:
                     temp = list2.index(str)
-                    if indexFirst + temp  <= resCount:
+                    if indexFirst + temp <= resCount:
                         resCount = indexFirst + temp
                         if len(res) == 0 or indexFirst + temp <= resCount:
                             res.append(str)
@@ -434,7 +436,7 @@ class Solution(object):
                 indexFirst += 1
             return res
 
-#141
+    # 141
 
     class Solution:
         def hasCycle(self, head: ListNode) -> bool:
@@ -448,7 +450,7 @@ class Solution(object):
             except:
                 return False
 
-#876
+    # 876
     class Solution:
         def middleNode(self, head: ListNode) -> ListNode:
             count = 0
@@ -462,7 +464,7 @@ class Solution(object):
                 res = res.next
             return res
 
-#206
+    # 206
     # Definition for singly-linked list.
     # class ListNode:
     #     def __init__(self, val=0, next=None):
@@ -479,7 +481,8 @@ class Solution(object):
                 res = ori
                 ori = tmp
             return res
-#92
+
+    # 92
     class Solution:
         def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
             if m == n:
@@ -500,7 +503,7 @@ class Solution(object):
             res.next = resPart2
             return dummyNode.next
 
-#203
+    # 203
     # Definition for singly-linked list.
     # class ListNode:
     #     def __init__(self, val=0, next=None):
@@ -518,7 +521,7 @@ class Solution(object):
                     cur = cur.next
             return dummyNode.next
 
-#328
+    # 328
     class Solution:
         def oddEvenList(self, head: ListNode) -> ListNode:
             if head is None:
@@ -535,7 +538,7 @@ class Solution(object):
             odd.next = evenHead
             return head
 
-#67
+    # 67
     class Solution:
         def addBinary(self, a: str, b: str) -> str:
             if len(a) == 0:
@@ -549,7 +552,7 @@ class Solution(object):
             else:
                 return self.addBinary(a[0:-1], b[0:-1]) + "1"
 
-#70
+    # 70
     class Solution:
         def climbStairs(self, n: int) -> int:
             res = [-1 for i in range(n + 1)]
@@ -562,8 +565,7 @@ class Solution(object):
                     res[i] = res[i - 1] + res[i - 2]
             return res[n]
 
-
-#746
+    # 746
     class Solution:
         def minCostClimbingStairs(self, cost: List[int]) -> int:
             amount = len(cost)
@@ -577,7 +579,7 @@ class Solution(object):
             else:
                 return cost[amount - 2]
 
-#83
+    # 83
     class Solution:
         def deleteDuplicates(self, head: ListNode) -> ListNode:
             cur = head
@@ -591,7 +593,7 @@ class Solution(object):
             else:
                 return head
 
-#82
+    # 82
     class Solution:
         def deleteDuplicates(self, head: ListNode) -> ListNode:
             dummyNode = ListNode(0)
@@ -609,14 +611,15 @@ class Solution(object):
             if cur.next and cur.next.val == val:
                 cur.next = cur.next.next
             return dummyNode.next
-#100
+
+    # 100
     class Solution:
         def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
             if p and q:
                 return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
             return p is q
 
-#101
+    # 101
     class Solution:
         def isSymmetric(self, root: TreeNode) -> bool:
             if root:
@@ -637,11 +640,11 @@ class Solution(object):
                     subTreeB.left, subTreeA.right)
             return subTreeA is subTreeB
 
-#104
+    # 104
     def maxDepth(self, root: TreeNode) -> int:
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right)) if root else 0
 
-#107
+    # 107
     class Solution:
         def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
             level = 1
@@ -668,7 +671,7 @@ class Solution(object):
                 self.checkDeeper(p.left, level, res)
                 self.checkDeeper(p.right, level, res)
 
-#102
+    # 102
     class Solution:
         def levelOrder(self, root: TreeNode) -> List[List[int]]:
             level = 1
@@ -695,7 +698,7 @@ class Solution(object):
                 self.checkDeeper(p.left, level, res)
                 self.checkDeeper(p.right, level, res)
 
-#108
+    # 108
     def sortedArrayToBST(self, num):
         if not num:
             return None
@@ -708,7 +711,7 @@ class Solution(object):
 
         return root
 
-#110
+    # 110
     class Solution:
         def isBalanced(self, root: TreeNode) -> bool:
 
@@ -725,17 +728,19 @@ class Solution(object):
 
             return getHeight(root) != -1
 
-#530
+    # 530
     def getMinimumDifference(self, root):
         L = []
+
         def dfs(node):
             if node.left: dfs(node.left)
             L.append(node.val)
             if node.right: dfs(node.right)
+
         dfs(root)
         return min(b - a for a, b in zip(L, L[1:]))
 
-#111
+    # 111
     def minDepth(self, root: TreeNode) -> int:
         def nextChild(subRoot, curDepth, minDepth) -> int:
             if subRoot:
@@ -753,7 +758,7 @@ class Solution(object):
 
         return nextChild(root, 1, 0)
 
-#112
+    # 112
     def hasPathSum(self, root, sum):
         if not root:
             return False
@@ -765,7 +770,7 @@ class Solution(object):
 
         return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
 
-#118
+    # 118
     class Solution:
         def generate(self, numRows: int) -> List[List[int]]:
             if numRows == 1:
@@ -782,7 +787,7 @@ class Solution(object):
                     res.append(tempList)
                 return res
 
-#119
+    # 119
     class Solution:
         def getRow(self, rowIndex: int) -> List[int]:
             if rowIndex == 0:
@@ -799,11 +804,11 @@ class Solution(object):
                     res.append(tempList)
                 return res[rowIndex]
 
-#121
+    # 121
     def maxProfit(self, prices: List[int]) -> int:
         diffPrices = []
         for i in range(len(prices) - 1):
-            diffPrices.append(prices[i+1] - prices[i])
+            diffPrices.append(prices[i + 1] - prices[i])
         maxRes = 0
         smallRes = 0
         for num in diffPrices:
@@ -820,22 +825,22 @@ class Solution(object):
                 smallRes = 0
         return maxRes
 
-#122
+    # 122
     def maxProfit(self, prices: List[int]) -> int:
         diffPrices = []
         for i in range(len(prices) - 1):
-            diffPrices.append(prices[i+1] - prices[i])
+            diffPrices.append(prices[i + 1] - prices[i])
         maxRes = 0
         for num in diffPrices:
             if num > 0:
                 maxRes += num
         return maxRes
 
-#123
+# 123 Todo:
     def maxProfit(self, prices: List[int]) -> int:
         diffPrices = []
         for i in range(len(prices) - 1):
-            diffPrices.append(prices[i+1] - prices[i])
+            diffPrices.append(prices[i + 1] - prices[i])
         firstRes = 0
         secondRes = 0
         smallRes = 0
@@ -856,6 +861,65 @@ class Solution(object):
                     smallRes += num
             else:
                 smallRes = 0
-        return firstRes+secondRes
+        return firstRes + secondRes
+
+#198:
+    class Solution:
+        def rob(self, nums: List[int]) -> int:
+            if len(nums) == 0:
+                return 0
+            if len(nums) == 1:
+                return nums[0]
+            if (len(nums) < 3):
+                return max(nums[0], nums[1])
+            if (len(nums) == 3):
+                return max(nums[0] + nums[2], nums[1])
+            dp = [0] * len(nums)
+            dp[0] = nums[0]
+            dp[1] = nums[1]
+            dp[2] = nums[0] + nums[2]
+            for i in range(3, len(nums)):
+                dp[i] = max(dp[i - 3] + nums[i], dp[i - 2] + nums[i])
+            return max(dp[len(nums) - 1], dp[len(nums) - 2])
+
+#213
+    class Solution:
+        def rob(self, nums: List[int]) -> int:
+            if len(nums) == 0:
+                return 0
+            if len(nums) == 1:
+                return nums[0]
+            if (len(nums) < 3):
+                return max(nums[0], nums[1])
+            if (len(nums) == 3):
+                return max(nums[0], nums[1], nums[2])
+            temp = nums[len(nums)-1]
+            dp0 = [0] * len(nums)
+            dp0[0] = nums[0]
+            dp0[1] = nums[1]
+            dp0[2] = nums[0] + nums[2]
+            nums[len(nums)-1] = 0
+            for i in range(3, len(nums)):
+                dp0[i] = max(dp0[i - 3] + nums[i], dp0[i - 2] + nums[i])
+            dp1 = [0] * len(nums)
+            dp1[0] = 0
+            dp1[1] = nums[1]
+            dp1[2] = nums[2]
+            nums[len(nums) - 1] = temp
+            for i in range(3, len(nums)):
+                dp1[i] = max(dp1[i - 3] + nums[i], dp1[i - 2] + nums[i])
+            return max(dp1[len(nums) - 1], dp1[len(nums) - 2], dp0[len(nums) - 1], dp0[len(nums) - 2])
+
+#168
+    class Solution:
+        def convertToTitle(self, n: int) -> str:
+            capitals = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+            result = ""
+            while (n > 0):
+                print(n)
+                result = capitals[(n - 1) % 26] + result
+                n = (n - 1) // 26
+            return result
+
 
 
