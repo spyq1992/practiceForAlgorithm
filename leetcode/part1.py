@@ -1,4 +1,6 @@
 from functools import reduce
+from idlelib.tree import TreeNode
+from typing import List
 
 
 class Solution(object):
@@ -920,6 +922,112 @@ class Solution(object):
                 result = capitals[(n - 1) % 26] + result
                 n = (n - 1) // 26
             return result
+
+#171
+    class Solution:
+        def titleToNumber(self, s: str) -> int:
+            capitals = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+            power = 0
+            res = 0
+            while (len(s) > 0):
+                if power == 0:
+                    res = capitals.index(s[-1]) + res + 1
+                else:
+                    res = 26 ** power * (capitals.index(s[-1]) + 1) + res
+                s = s[:-1]
+                power += 1
+            return res
+
+#914
+    class Solution:
+        def hasGroupsSizeX(self, deck: List[int]) -> bool:
+            if len(deck) < 2:
+                return False
+            temp = {}
+            smallest = 10 ^ 4
+            for num in deck:
+                if num in temp:
+                    temp[num] += 1
+                else:
+                    temp[num] = 1
+            for key, value in temp.items():
+                if smallest > value:
+                    smallest = value
+            for i in range(2, smallest + 1):
+                print(i)
+                for key, value in temp.items():
+                    if value % i != 0:
+                        break
+                else:
+                    return True
+            return False
+
+#152
+    class Solution:
+        def maxProduct1(self, nums: List[int]) -> int:
+            maxBefore = nums[0]
+            current = 0
+            maxAfter = 0
+            for num in nums:
+                if num == 0:
+                    maxBefore = max(maxBefore, current, maxAfter)
+                    print(maxBefore)
+                    if maxBefore > 0:
+                        current = 1
+                        maxAfter = 1
+                    else:
+                        current = 0
+                        maxAfter = 0
+                else:
+                    if current < 0:
+                        if maxAfter == 0:
+                            maxAfter = 1
+                        if num > 0:
+                            maxAfter *= num
+                        if num < 0:
+                            maxAfter = 0
+                        current *= num
+                    elif current > 0:
+                        if num < 0:
+                            print(current)
+                            maxBefore = max(current, maxBefore)
+                        current *= num
+                    else:
+                        current = num
+                        maxAfter = 0
+
+            return max(maxBefore, current, maxAfter, 0)
+
+        class Solution:
+            def maxProduct(self, nums: List[int]) -> int:
+                res = nums[0]
+                maxi = res
+                mini = res
+                for num in range(1, len(nums)):
+                    if nums[num] < 0:
+                        maxi, mini = mini, maxi
+                    maxi = max(nums[num], nums[num] * maxi)
+                    mini = min(nums[num], nums[num] * mini)
+
+                    res = max(maxi, res)
+                return res
+
+#5
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        res = ''
+        for i in range(len(s)):
+            res = max(self.check(i, i + 1, s), self.check(i, i, s), res, key=len)
+        return res
+
+    def check(self, i, j, s):
+        while i >= 0 and j < len(s) and s[i] == s[j]:
+            i -= 1
+            j += 1
+        return s[i + 1:j]
+
+
+
 
 
 
