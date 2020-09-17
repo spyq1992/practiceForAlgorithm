@@ -1026,8 +1026,54 @@ class Solution:
             j += 1
         return s[i + 1:j]
 
+#62
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        res = [[0 for i in range(n)] for j in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i ==0 or j ==0:
+                    res[i][j] = 1
+                else:
+                    res[i][j] = res[i][j-1] + res[i-1][j]
+        return res[m-1][n-1]
 
+#63
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        res = [[0 for i in range(n)] for j in range(m)]
+        res[0][0] = 1
+        for i in range(m):
+            for j in range(n):
+                if obstacleGrid[i][j] == 1:
+                    res[i][j] = 0
+                else:
+                    if i == 0 and j != 0 :
+                        res[i][j] = res[i][j-1]
+                    elif j == 0 and i != 0:
+                        res[i][j] = res[i-1][j]
+                    elif j != 0 and i != 0:
+                        res[i][j] = res[i][j - 1] + res[i - 1][j]
+        return res[m - 1][n - 1]
 
+#64
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        res = [[0 for i in range(n)] for j in range(m)]
+        res[0][0] =grid[0][0]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j != 0:
+                    res[i][j] = res[i][j - 1] + grid[i][j]
+                elif j == 0 and i != 0:
+                    res[i][j] = res[i - 1][j] + grid[i][j]
+                elif j != 0 and i !=0:
+                    res[i][j] = min(res[i-1][j], res[i][j-1]) + grid[i][j]
+        return res[m - 1][n - 1]
 
 
 
