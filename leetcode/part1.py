@@ -1075,5 +1075,43 @@ class Solution:
                     res[i][j] = min(res[i-1][j], res[i][j-1]) + grid[i][j]
         return res[m - 1][n - 1]
 
+#174
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        m = len(dungeon)
+        n = len(dungeon[0])
+        res = [[0 for i in range(n)] for j in range(m)]
+        res[0][0] = dungeon[0][0]
+        smallest = [[0 for i in range(n)] for j in range(m)]
+        smallest[0][0] = 1 if dungeon[0][0] > 0 else dungeon[0][0]
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j != 0:
+                    res[i][j] = res[i][j - 1] + dungeon[i][j]
+                    smallest[i][j] = min(res[i][j], smallest[i][j-1])
+                elif j == 0 and i != 0:
+                    res[i][j] = res[i - 1][j] + dungeon[i][j]
+                    smallest[i][j] = min(res[i][j], smallest[i- 1][j])
+                elif j != 0 and i != 0:
+                    if smallest[i - 1][j] <= smallest[i][j - 1]:
+                        res[i][j] =  res[i][j - 1] + dungeon[i][j]
+                        smallest[i][j] = min(smallest[i][j - 1], res[i][j])
+                    else:
+                        res[i][j] = res[i - 1][j] + dungeon[i][j]
+                        smallest[i][j] = min(smallest[i - 1][j ], res[i][j])
+        return smallest[m - 1][n - 1] if smallest[m - 1][n - 1]>0  else  smallest[m - 1][n - 1] * -1 + 1
+
+
+class Solution:
+    def calculateMinimumHP(self, dungeon):
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [[float("inf")] * (n + 1) for _ in range(m + 1)]
+        dp[m - 1][n], dp[m][n - 1] = 1, 1
+
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                dp[i][j] = max(min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j], 1)
+
+        return dp[0][0]
 
 
