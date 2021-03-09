@@ -1142,4 +1142,19 @@ class Solution:
             elif nums[int((left + right) / 2)] < target:
                 left = int((left + right) / 2)
 
-
+#278
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        r = n-1
+        l = 0
+        while(l<=r):
+            mid = int((r+l)/2)
+            if isBadVersion(mid):
+                r = mid-1
+            else:
+                l = mid+1
+        return l
