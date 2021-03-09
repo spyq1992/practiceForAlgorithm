@@ -1123,4 +1123,23 @@ class Solution:
             n = sum([int(x) **2 for x in str(n)])
         return n == 1
 
-#204
+#35
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        if (target < nums[0]):
+            return 0
+        if (target > nums[len(nums) - 1]):
+            return len(nums)
+        left = 0
+        right = len(nums) - 1
+        while (True):
+            if (right - left) == 1:
+                return left if nums[left] == target else right
+            elif (nums[int((left + right) / 2)] == target):
+                return int((left + right) / 2)
+            elif nums[int((left + right) / 2)] > target:
+                right = int((left + right) / 2)
+            elif nums[int((left + right) / 2)] < target:
+                left = int((left + right) / 2)
+
+
