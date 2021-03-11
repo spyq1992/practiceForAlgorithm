@@ -1158,3 +1158,37 @@ class Solution:
             else:
                 l = mid+1
         return l
+
+#164
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        result, count = nums[0], 0
+        for num in nums:
+            if num == result:
+                count += 1
+            elif count == 0:
+                result = num
+            else:
+                count -= 1
+        return result
+
+#229
+class Solution:
+    def majorityElement(self, nums: List[int]) -> List[int]:
+        first, count1, second, count2 = 0, 0, 1, 0
+        if not nums:
+            return []
+        for num in nums:
+            if first == num:
+                count1 += 1
+            elif second == num:
+                count2 += 1
+            elif count1 == 0:
+                first, count1 = num, 1
+            elif count2 == 0:
+                second, count2 = num, 1
+            else:
+                count1 -= 1
+                count2 -= 1
+        return [n for n in (first, second)
+                    if nums.count(n) > len(nums) // 3]
