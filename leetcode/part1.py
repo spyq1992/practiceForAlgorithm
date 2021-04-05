@@ -1192,3 +1192,68 @@ class Solution:
                 count2 -= 1
         return [n for n in (first, second)
                     if nums.count(n) > len(nums) // 3]
+
+#172
+class Solution:
+    def trailingZeroes(self, n: int) -> int:
+        return 0 if n == 0 else (int)(n/5 + self.trailingZeroes(n/5))
+
+#173
+class BSTIterator:
+
+    def __init__(self, root: TreeNode):
+        self.que = []
+        self.allLeft(root)
+
+    def next(self) -> int:
+        print(self.que)
+        cur = self.que.pop()
+        self.allLeft(cur.right)
+        return cur.val
+
+    def hasNext(self) -> bool:
+        return self.que != []
+
+    def allLeft(self, root):
+        while root:
+            self.que.append(root)
+            root = root.left
+
+
+#175
+# select p.FirstName, p.LastName, a.City, a.State from Person p left join Address a on p.PersonId = a.PersonId;
+
+#176
+#select (select distinct salary
+# from Employee
+# order by salary DESC
+# limit 1 offset 1) as SecondHighestSalary;
+
+#177
+# CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+# BEGIN
+# DECLARE M INT;
+# SET M=N-1;
+#   RETURN (
+#       select (select distinct salary from Employee order by salary DESC limit 1 offset M) as SecondHighestSalary
+#   );
+# END
+
+#303
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.numDiff = []
+        self.getNumDiff(nums)
+
+    def sumRange(self, left: int, right: int) -> int:
+        if left == 0:
+            return self.numDiff[right]
+        return self.numDiff[right] - self.numDiff[left - 1]
+
+    def getNumDiff(self, nums: List[int]):
+        sumFromBegin = 0
+        for num in nums:
+            sumFromBegin += num
+            self.numDiff.append(sumFromBegin)
+
