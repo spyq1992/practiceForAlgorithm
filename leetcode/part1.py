@@ -1290,3 +1290,24 @@ class Solution:
             for j in range(1, i+1):
                 dp[i] += dp[j-1] * dp[i-j]
         return dp[n]
+
+#91
+class Solution:
+
+    def numDecodings(self, s: str) -> int:
+        if len(s) == 0 or s[0] == "0":
+            return 0
+        if len(s) == 1:
+            return 1
+        result = 1
+        dp = [0] * (len(s) + 1)
+        dp[0] = 1
+        dp[1] = 1
+
+        for i in range(2, len(s) + 1):
+            if 0 < int(s[i - 1:i]):
+                dp[i] += dp[i - 1]
+            if s[i - 2:i][0] != '0' and int(s[i - 2:i]) <= 26:
+                dp[i] += dp[i - 2]
+        return dp[len(s)]
+
