@@ -1257,3 +1257,36 @@ class NumArray:
             sumFromBegin += num
             self.numDiff.append(sumFromBegin)
 
+#304
+class NumMatrix:
+
+    def __init__(self, matrix: List[List[int]]):
+        self.sumList = []
+        for row in range(len(matrix)):
+            rowSum = 0
+            rowList = []
+            for col in range(len(matrix[0])):
+                rowSum += matrix[row][col]
+                rowList.append(rowSum)
+            self.sumList.append(rowList)
+        print(self.sumList)
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
+        result = 0
+        if col1 == 0 :
+            for row in range(row1,row2+1):
+                result += self.sumList[row][col2]
+        else:
+            for row in range(row1,row2+1):
+                result = result + self.sumList[row][col2] - self.sumList[row][col1-1]
+        return result
+
+#96
+class Solution:
+    def numTrees(self, n: int) -> int:
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        for i in range(1, n+1):
+            for j in range(1, i+1):
+                dp[i] += dp[j-1] * dp[i-j]
+        return dp[n]
