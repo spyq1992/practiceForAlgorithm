@@ -1311,3 +1311,91 @@ class Solution:
                 dp[i] += dp[i - 2]
         return dp[len(s)]
 
+#27
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i = 0
+        for x in nums:
+            if x != val:
+                nums[i] = x
+                i += 1
+        return i
+
+#283
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        i = 0
+        for num in nums:
+            if num != 0:
+                nums[i] = num
+                i += 1
+        while(i < len(nums)):
+            nums[i] = 0
+            i += 1
+
+#1550
+class Solution:
+    def threeConsecutiveOdds(self, arr: List[int]) -> bool:
+        count = 0
+        for num in arr:
+            if num % 2 == 0:
+                count = 0
+            else:
+                count += 1
+                if count == 3:
+                    return True
+        return False
+
+#1290
+class Solution:
+    def getDecimalValue(self, head: ListNode) -> int:
+        ans = 0
+        while head:
+            ans = (ans << 1) | head.val
+            head = head.next
+        return ans
+
+#19
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        dummyNode = ListNode(0)
+        dummyNode.next = head
+        fastNode = dummyNode
+        slowNode = dummyNode
+        for i in range(n + 1):
+            fastNode = fastNode.next
+        while fastNode:
+            slowNode = slowNode.next
+            fastNode = fastNode.next
+        slowNode.next = slowNode.next.next
+        return dummyNode.next
+
+#1721
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapNodes(self, head: ListNode, k: int) -> ListNode:
+        dummyNode = ListNode(0)
+        dummyNode.next = head
+        firstNode = dummyNode
+        secondNode = dummyNode
+        firstPre = dummyNode
+        secondPre = dummyNode
+        fast = dummyNode
+        for i in range(k - 1):
+            firstPre = firstPre.next
+            fast = fast.next
+        firstNode = firstPre.next
+        fast = fast.next
+        while fast.next:
+            fast = fast.next
+            secondPre = secondPre.next
+        secondNode = secondPre.next
+
+        firstPre.next, secondPre.next = secondNode, firstNode
+        firstNode.next, secondNode.next = secondNode.next, firstNode.next
+
+        return dummyNode.next
