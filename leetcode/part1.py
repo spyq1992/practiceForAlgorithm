@@ -1399,3 +1399,24 @@ class Solution:
         firstNode.next, secondNode.next = secondNode.next, firstNode.next
 
         return dummyNode.next
+
+#24
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: ListNode) -> ListNode:
+        if head is None or head.next is None:
+            return head
+        dummyNode = ListNode(0)
+        dummyNode.next = head
+        firstPre = dummyNode
+        firstNode = dummyNode.next
+        secondNode = dummyNode.next.next
+        while firstNode and secondNode:
+            firstPre.next, firstNode.next, secondNode.next = secondNode, secondNode.next, firstNode
+            if firstNode.next is None or firstNode.next.next is None:
+                return dummyNode.next
+            firstPre, firstNode, secondNode = firstNode, firstNode.next, firstNode.next.next
