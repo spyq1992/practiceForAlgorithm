@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Copy via ssh
+      uses: garygrossgarten/github-action-scp@v0.8.0
+      with:
+        local: ./..
+        remote: airflow/dags
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USER }}
+        privateKey: ${{ secrets.PRIVATE_KEY }}
